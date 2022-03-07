@@ -21,6 +21,10 @@ module.exports = {
     extensions: ["*", ".js", ".jsx"],
     alias: {
       "@": path.resolve(__dirname, "src"), // shortcut to reference src folder from anywhere
+      components: path.resolve(__dirname, "src", "components"),
+      pages: path.resolve(__dirname, "src", "pages"),
+      util: path.resolve(__dirname, "src", "util"),
+      context: path.resolve(__dirname, "src", "context"),
     },
   },
   optimization: {

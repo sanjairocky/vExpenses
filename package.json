@@ -6,8 +6,7 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "6",
-    "react-service-worker": "^0.1.1"
+    "react-router-dom": "6"
   },
   "scripts": {
     "dev": "webpack-dev-server",
