@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from "react";
-import {
-  useLocation,
-  useNavigate,
-  useOutlet,
-  useParams,
-} from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate, useOutlet } from "react-router-dom";
 import { getPathName } from "util";
-import { useApp } from "context/app";
+import { getTripById } from "api/trips";
 
 export default () => {
-  const { tripId } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [{ trips }] = useApp();
   const outlet = useOutlet();
-  const getTrip = () => trips.find(({ id }) => id === tripId);
-  const [trip, setTrip] = useState(getTrip());
+  const { data: trip, loading, error } = getTripById();
 
-  useEffect(() => {
-    setTrip(getTrip());
-  }, [tripId]);
+  if (loading) return "Loading...,";
 
-  if (!trip) return "trip not found";
+  if (error) return "trip not found";
 
   return outlet ? (
     outlet
   ) : (
     <div>
       <div className="d-flex flex-column justify-content-center align-items-center p-3">
-        <div>trip: {tripId}</div>
+        <div>trip: {trip.id}</div>
         <div>Expenses : {trip?.expenses?.length}</div>
+        <div>Users : {trip?.users?.length}</div>
       </div>
       <div className="d-flex flex-wrap">
         <button

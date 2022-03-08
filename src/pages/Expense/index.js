@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useApp } from "context/app";
+import React from "react";
+
+import { getExpenseByExpenseIdAndTripId } from "api/expenses";
 
 export default () => {
-  const { expenseId, tripId } = useParams();
-  const [{ trips }] = useApp();
+  const { data: expense, loading, error } = getExpenseByExpenseIdAndTripId();
 
-  const getExpense = () =>
-    trips
-      .find(({ id }) => id === tripId)
-      .expenses?.find(({ id }) => id === expenseId);
+  if (loading) return "Loading...,";
 
-  const [expense, setExpense] = useState(getExpense());
-
-  useEffect(() => {
-    setExpense(getExpense());
-  }, [tripId, expenseId]);
-
-  if (!expense) return "Expense not Found!";
+  if (error) return "Expenses not found";
 
   return (
     <div className="d-flex flex-column p-3">
-      <div>Trip Id : {tripId}</div>
-      <div>Expense ID : {expenseId}</div>
+      <div>Trip Id : {expense.tripId}</div>
+      <div>Expense ID : {expense.id}</div>
       <div>Expense Name : {expense.name}</div>
-      <div>Users : {expense.users.length}</div>
+      <div>Users : {expense.participants.length}</div>
     </div>
   );
 };
