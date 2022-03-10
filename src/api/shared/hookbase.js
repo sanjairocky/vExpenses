@@ -12,10 +12,10 @@ export default ({
       loading,
       data,
       setData = (d) => {
-        setState({ data: d });
+        setState({ data: d, fetched: true });
       },
       setError = (e) => {
-        setState({ error: e });
+        setState({ error: e, fetched: true });
       },
     },
     setState,
@@ -23,23 +23,25 @@ export default ({
     loading: true,
     error: null,
     data: null,
+    fetched: false,
   });
 
+  const fetch = () =>
+    getData()
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          setError(error.response.data);
+        } else if (error.request) {
+          setError(error.request);
+        } else {
+          setError(error.message);
+        }
+      });
   useEffect(() => {
-    if (!lazy)
-      getData()
-        .then((response) => {
-          setData(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            setError(error.response.data);
-          } else if (error.request) {
-            setError(error.request);
-          } else {
-            setError(error.message);
-          }
-        });
+    if (!lazy) fetch();
   }, []);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export default ({
   }, [error]);
 
   return [
-    lazy ? [getData, { loading, data, error }] : { loading, data, error },
+    lazy ? [fetch, { loading, data, error }] : { loading, data, error },
     {
       setData,
       setError,

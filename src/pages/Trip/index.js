@@ -7,9 +7,9 @@ export default () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const outlet = useOutlet();
-  const { data: trip, loading, error } = getTripById();
+  const { data: trip, isLoading, error } = getTripById();
 
-  if (loading) return "Loading...,";
+  if (isLoading) return "Loading...,";
 
   if (error) return "trip not found";
 

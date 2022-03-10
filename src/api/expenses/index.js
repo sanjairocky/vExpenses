@@ -12,7 +12,7 @@ export const getExpenses = (props = {}) => {
         })),
       });
     }
-    return ExpenseClient.get("/expenses");
+    return ExpenseClient.get("");
   };
   const [res] = useApiHook({
     ...props,

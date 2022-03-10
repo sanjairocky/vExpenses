@@ -6,9 +6,9 @@ import { getTrips } from "api/trips";
 export default () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { data: trips, loading, error } = getTrips();
+  const { data: trips, isLoading, error } = getTrips();
 
-  if (loading) return "loading...";
+  if (isLoading) return "loading...";
 
   if (error) return "Error while fetching Trips";
 

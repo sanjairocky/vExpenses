@@ -8,8 +8,22 @@ import axios from "axios";
 //   console.log(response.config);
 // });
 
+const baseProps = {
+  timeout: 2 * 1000,
+  withCredentials: false,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    "X-Sanazu-Client": "vExpenses",
+  },
+};
+
 export const ExpenseClient = axios.create({
   baseURL: `${API_URL}/api/v1/expenses/`,
-  timeout: 2 * 1000,
-  headers: { "X-Sanazu-Client": "vExpenses" },
+  ...baseProps,
+});
+
+export const TripClient = axios.create({
+  baseURL: `${API_URL}/api/v1/trips/`,
+  ...baseProps,
 });
