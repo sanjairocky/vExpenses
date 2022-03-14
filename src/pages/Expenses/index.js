@@ -1,16 +1,26 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { getPathName } from "util";
 import { getExpensesByTripId } from "api/expenses";
+import { getExpenses } from "../../api/expenses";
+
+import useQuery from "../../hooks/useQuery";
 
 export default () => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { data: expenses, loading, error } = getExpensesByTripId();
+  const query = useQuery();
+  const {
+    data: expenses,
+    loading,
+    error,
+  } = query.get("tripId")
+    ? getExpensesByTripId({ tripId: query.get("tripId") })
+    : getExpenses();
 
   if (loading) return "Loading...,";
 
-  if (error) return "Expenses not found";
+  if (!expenses?.length || error) return "Expenses not found";
+
+  console.log(expenses, query.get("tripId"));
 
   return (
     <div className="d-flex flex-grow-1 position-relative">
@@ -19,14 +29,14 @@ export default () => {
           <Link
             key={key}
             className="w-50 p-3 td-none d-flex justify-content-center"
-            to={getPathName(pathname, expense.id)}
+            to={"/expenses/" + expense.id}
           >
             {JSON.stringify(expense, null, 2)}
           </Link>
         ))}
       </div>
       <Link
-        to={getPathName(pathname, "add")}
+        to={"/expenses/add"}
         className="flex-center position-absolute z-index-2 rounded-circle bg-primary text-white p-3 td-none m-3"
         style={{ right: 0, bottom: 0 }}
       >

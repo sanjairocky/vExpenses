@@ -1,13 +1,5 @@
 import axios from "axios";
 
-// LocationClient.get("").then(function (response) {
-//   console.log(response.data);
-//   console.log(response.status);
-//   console.log(response.statusText);
-//   console.log(response.headers);
-//   console.log(response.config);
-// });
-
 const baseProps = {
   timeout: 2 * 1000,
   withCredentials: false,
@@ -25,5 +17,10 @@ export const ExpenseClient = axios.create({
 
 export const TripClient = axios.create({
   baseURL: `${API_URL}/api/v1/trips/`,
+  ...baseProps,
+});
+
+export const UserClient = axios.create({
+  baseURL: `${API_URL}/api/v1/users/`,
   ...baseProps,
 });

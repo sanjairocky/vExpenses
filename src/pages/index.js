@@ -1,6 +1,9 @@
-export { default as Trip } from "./Trip";
+export { default as ViewTrip } from "./ViewTrip";
 export { default as Trips } from "./Trips";
 export { default as Expenses } from "./Expenses";
 export { default as Expense } from "./Expense";
 export { default as CreateTrip } from "./CreateTrip";
 export { default as CreateExpense } from "./CreateExpense";
+export { default as Home } from "./Home";
+export { default as Users } from "./Users";
+export { default as CreateUser } from "./CreateUser";

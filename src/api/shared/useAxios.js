@@ -62,7 +62,7 @@ export const useAxios = ({
   };
 
   useEffect(() => {
-    if (!lazy) fetchData(axiosParams);
+    if (!lazy) fetchData({});
   }, []); // execute once only
 
   return ((result) => (lazy ? [fetchData, result] : result))({
@@ -71,6 +71,7 @@ export const useAxios = ({
     isPending: state.status === "pending",
     isResolved: state.status === "resolved",
     isRejected: state.status === "rejected",
+    refetch: fetchData,
     ...state,
   });
 };

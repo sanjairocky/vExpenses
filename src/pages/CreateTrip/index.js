@@ -11,7 +11,7 @@ export default () => {
   });
   const formik = useFormik({
     initialValues: {},
-    onSubmit: (values) => addTrip({ body: values }),
+    onSubmit: (values) => addTrip({ data: values }),
   });
 
   if (isPending) return "Creating Trip...,";
@@ -45,7 +45,7 @@ export default () => {
             defaultValue={formik.values.description}
           />
         </div>
-        <button type="submit" className="m-2">
+        <button type="submit" className="m-2" disabled={!formik.isValid}>
           Submit
         </button>
       </form>

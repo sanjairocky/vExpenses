@@ -14,7 +14,7 @@ export default () => {
       <div>Trip Id : {expense.tripId}</div>
       <div>Expense ID : {expense.id}</div>
       <div>Expense Name : {expense.name}</div>
-      <div>Users : {expense.participants.length}</div>
+      <div>Users : {expense.participants?.length}</div>
     </div>
   );
 };

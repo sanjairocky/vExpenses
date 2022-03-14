@@ -6,9 +6,8 @@ export const getExpenses = (props = {}) => {
   const getData = () => {
     if (PROFILE === "dev") {
       return Promise.resolve({
-        data: expenseMockData.trips.map(({ expenses, id }) => ({
-          ...expenses,
-          tripId: id,
+        data: expenseMockData.trips.flatMap(({ expenses, id }) => ({
+          ...expenses.map((e) => ({ ...e, tripId: id })),
         })),
       });
     }
@@ -23,16 +22,14 @@ export const getExpenses = (props = {}) => {
 };
 
 export const getExpensesByTripId = (props = {}) => {
-  const { tripId } = useParams();
   const getData = () => {
     if (PROFILE === "dev") {
       const expenses =
-        expenseMockData.trips.find(({ id }) => id === tripId)?.expenses || [];
+        expenseMockData.trips.find(({ id }) => id === props.tripId)?.expenses ||
+        [];
       return Promise.resolve({
-        data: expenses.map(({ participants, ...exp }) => ({
-          ...exp,
-          participants: participants?.length,
-          tripId,
+        data: expenses.flatMap(({ participants, ...exp }) => ({
+          ...exp.map((e) => ({ ...e, tripId: id })),
         })),
       });
     }
