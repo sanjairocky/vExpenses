@@ -1,35 +1,30 @@
-import React, { useEffect } from "react";
-import { useLocation, useNavigate, useOutlet } from "react-router-dom";
-import { getPathName } from "util";
+import React from "react";
 import { getTripById } from "api/trips";
+import { Table } from "components/Table";
 
 export default () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const outlet = useOutlet();
   const { data: trip, isLoading, error } = getTripById();
 
   if (isLoading) return "Loading...,";
 
   if (error) return "trip not found";
 
-  return outlet ? (
-    outlet
-  ) : (
-    <div>
-      <div className="d-flex flex-column justify-content-center align-items-center p-3">
-        <div>trip: {trip.id}</div>
-        <div>Expenses : {trip?.expenses?.length}</div>
-        <div>Users : {trip?.users?.length}</div>
+  return (
+    <div className="flex-grow-1 d-flex flex-column">
+      <div className="d-flex flex-column justify-content-center align-items-center w-50 align-self-center p-3 my-3 border shadow rounded">
+        <div>TRIP : {trip.id}</div>
+        <div>USERS : {trip?.users?.length}</div>
       </div>
-      <div className="d-flex flex-wrap">
-        <button
-          className="p-5 w-50"
-          onClick={() => navigate(getPathName(pathname, "expenses"))}
-        >
-          view expenses
-        </button>
-      </div>
+      <Table
+        header={[
+          { name: "Name", field: "name" },
+          { name: "First Name", field: "firstName" },
+          { name: "Last Name", field: "lastName" },
+          { name: "Email Id", field: "email" },
+        ]}
+        rows={trip?.users}
+        slno
+      />
     </div>
   );
 };

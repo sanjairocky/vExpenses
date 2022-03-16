@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { createTrip } from "api/trips";
+import { getUsers } from "api/users";
 import { useNavigate } from "react-router-dom";
 
 export default () => {
@@ -9,6 +10,7 @@ export default () => {
     lazy: true,
     onCompleted: () => navigate("/"),
   });
+  const { data: users } = getUsers();
   const formik = useFormik({
     initialValues: {},
     onSubmit: (values) => addTrip({ data: values }),
@@ -19,33 +21,50 @@ export default () => {
     <div className="d-flex flex-grow-1 justify-content-center align-items-center">
       <form
         onSubmit={formik.handleSubmit}
-        className="d-flex flex-column border p-5 shadow bg-primary text-white"
+        className="d-flex flex-column justify-content-around border px-5 py-2 h-50  rounded shadow"
       >
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="title" className="mx-1">
-            Title
-          </label>
+        <h5 className="align-self-center text-primary">Create Trip</h5>
+        <div className="d-flex flex-column justify-content-between p-2">
           <input
             id="title"
             name="title"
             type="text"
+            placeholder=" Title"
+            className="p-2 mb-3"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             defaultValue={formik.values.title}
           />
-        </div>
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="description" className="mx-1">
-            Description
-          </label>
+
           <input
             id="description"
             name="description"
             type="text"
+            className="p-2"
+            placeholder="Description"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             defaultValue={formik.values.description}
           />
+          <select
+            id="authorId"
+            className="p-2"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            defaultValue={formik.values.authorId}
+          >
+            {(users || []).map((u, key) => (
+              <option key={key} value={u.id}>
+                {u.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <button type="submit" className="m-2" disabled={!formik.isValid}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={!formik.isValid}
+        >
           Submit
         </button>
       </form>

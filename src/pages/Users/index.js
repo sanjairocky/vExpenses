@@ -18,7 +18,10 @@ export default () => {
           person_add
         </Link>
       </div>
-      <div className="d-flex flex-column overflow-y-scroll flex-grow-1">
+      <div
+        className="d-flex flex-column overflow-y-scroll flex-grow-1"
+        style={{ height: "70vh" }}
+      >
         {users.map((u, key) => (
           <User {...u} key={key} />
         ))}
