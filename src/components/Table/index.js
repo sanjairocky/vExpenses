@@ -7,7 +7,7 @@ export const Table = ({
   className = "",
   ...props
 }) => (
-  <table class={`table table-striped ${className}`} {...props}>
+  <table className={`table table-striped ${className}`} {...props}>
     <TableHeader slno={slno} header={header} />
     <TableBody slno={slno} rows={rows} header={header} />
   </table>
@@ -40,8 +40,8 @@ export const TableRow = ({
 }) => (
   <tr {...props}>
     {slno && <th scope="row">{rowNum}</th>}
-    {header.map(({ field }, key) => (
-      <td key={key}>{rowData[field]}</td>
+    {header.map(({ field, render }, key) => (
+      <td key={key}>{render ? render(rowData) : rowData[field]}</td>
     ))}
   </tr>
 );

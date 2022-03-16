@@ -11,20 +11,28 @@ export default () => {
 
   return (
     <div className="flex-grow-1 d-flex flex-column">
-      <div className="d-flex flex-column justify-content-center align-items-center w-50 align-self-center p-3 my-3 border shadow rounded">
-        <div>TRIP : {trip.id}</div>
-        <div>USERS : {trip?.users?.length}</div>
+      <div className="d-flex flex-column justify-content-center align-items-center w-75 align-self-center p-3 my-3 border shadow rounded">
+        <h3>{`${trip.id} - ${trip.title}`}</h3>
+        <h5 style={{ wordBreak: "break-word" }}>{trip.description}</h5>
       </div>
-      <Table
-        header={[
-          { name: "Name", field: "name" },
-          { name: "First Name", field: "firstName" },
-          { name: "Last Name", field: "lastName" },
-          { name: "Email Id", field: "email" },
-        ]}
-        rows={trip?.users}
-        slno
-      />
+      <div className="m-3">
+        <h4 className="mb-3">{`USERS - ${trip?.users?.length || 0} :`}</h4>
+        <Table
+          header={[
+            { name: "Name", field: "name" },
+            { name: "First Name", field: "firstName" },
+            { name: "Last Name", field: "lastName" },
+            { name: "Email Id", field: "email" },
+            {
+              name: "Author",
+              render: ({ author }) => (author ? "Yes" : "NO"),
+            },
+          ]}
+          rows={trip?.users}
+          slno
+          className="border-top"
+        />
+      </div>
     </div>
   );
 };

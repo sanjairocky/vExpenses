@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import { createTrip } from "api/trips";
 import { getUsers } from "api/users";
+import createTripSchema from "schemas/createTripSchema";
 import { useNavigate } from "react-router-dom";
 
 export default () => {
@@ -12,8 +13,10 @@ export default () => {
   });
   const { data: users } = getUsers();
   const formik = useFormik({
+    validationSchema: createTripSchema,
     initialValues: {},
     onSubmit: (values) => addTrip({ data: values }),
+    validateOnMount: true,
   });
 
   if (isPending) return "Creating Trip...,";
@@ -40,7 +43,7 @@ export default () => {
             id="description"
             name="description"
             type="text"
-            className="p-2"
+            className="p-2 mb-3"
             placeholder="Description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -53,6 +56,7 @@ export default () => {
             onBlur={formik.handleBlur}
             defaultValue={formik.values.authorId}
           >
+            <option>Select author</option>
             {(users || []).map((u, key) => (
               <option key={key} value={u.id}>
                 {u.name}

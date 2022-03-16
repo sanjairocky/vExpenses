@@ -42,6 +42,7 @@ module.exports = (env) => {
         util: path.resolve(__dirname, "src", "util"),
         context: path.resolve(__dirname, "src", "context"),
         api: path.resolve(__dirname, "src", "api"),
+        schemas: path.resolve(__dirname, "src", "schemas"),
       },
     },
     optimization: {
