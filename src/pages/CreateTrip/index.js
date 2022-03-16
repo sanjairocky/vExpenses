@@ -24,7 +24,7 @@ export default () => {
     <div className="d-flex flex-grow-1 justify-content-center align-items-center">
       <form
         onSubmit={formik.handleSubmit}
-        className="d-flex flex-column justify-content-around border px-5 py-2 h-50  rounded shadow"
+        className="d-flex flex-column justify-content-around border px-5 py-2 h-75  rounded shadow"
       >
         <h5 className="align-self-center text-primary">Create Trip</h5>
         <div className="d-flex flex-column justify-content-between p-2">

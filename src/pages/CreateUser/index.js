@@ -26,57 +26,58 @@ export default () => {
     <div className="d-flex flex-grow-1 justify-content-center align-items-center">
       <form
         onSubmit={formik.handleSubmit}
-        className="d-flex flex-column border p-5 shadow bg-primary text-white"
+        className="d-flex flex-column justify-content-around border px-5 py-2 h-75  rounded shadow"
       >
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="firstName" className="mx-1">
-            First Name
-          </label>
+        <h5 className="align-self-center text-primary">Create User</h5>
+        <div className="d-flex flex-column justify-content-between p-2">
           <input
             id="firstName"
             name="firstName"
             type="text"
+            placeholder="First Name"
+            className="p-2 mb-3"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             defaultValue={formik.values.firstName}
           />
-        </div>
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="lastName" className="mx-1">
-            LastName
-          </label>
+
           <input
             id="lastName"
             name="lastName"
             type="text"
+            placeholder="Last Name"
+            className="p-2 mb-3"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             defaultValue={formik.values.lastName}
           />
-        </div>
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="name" className="mx-1">
-            Name
-          </label>
+
           <input
             type="text"
             id="name"
             name="name"
+            placeholder="Name"
+            className="p-2 mb-3"
             defaultValue={formik.values.name}
             disabled
           />
-        </div>
-        <div className="d-flex justify-content-between p-2">
-          <label htmlFor="description" className="mx-1">
-            Email
-          </label>
+
           <input
             id="email"
             name="email"
             type="email"
+            placeholder="Email"
+            className="p-2"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             defaultValue={formik.values.email}
           />
         </div>
-        <button type="submit" className="m-2" disabled={!formik.isValid}>
+        <button
+          type="submit"
+          className="m-2 btn btn-primary"
+          disabled={!formik.isValid}
+        >
           Submit
         </button>
       </form>
