@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import { Trips, CreateTrip, Home, Users, ViewTrip, CreateUser } from "pages";
 import { useUser } from "context/app";
-import { getUserByEmail } from "./api/users";
+import { getUserByEmail, createUser } from "./api/users";
 
 const user1 =
   "eyJuYW1lIjoic2FuamFpIGt1bWFyIiwiZW1haWwiOiJ0YWxrMnNhbmphaWlAZ21haWwuY29tIiwibGFzdE5hbWUiOiJrdW1hciIsImZpcnN0TmFtZSI6InNhbmphaSIsImltYWdlVXJsIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2lIYmx6cHMwN1lmbUlBTEI3elIzUjZVbWtjbVR2ZE5DLWxFYVhtOGc9czk2LWMifQ==";
@@ -14,6 +14,9 @@ export default () => {
   const [addUser] = createUser({
     lazy: true,
     onCompleted: (data) => setUser(data),
+    onError: (e) => {
+      setUser();
+    },
   });
   const [getUser] = getUserByEmail({
     lazy: true,
@@ -21,9 +24,21 @@ export default () => {
       if (data.length) {
         setUser(data[0]);
       } else {
-        addUser({ data: user });
-        console.log("creating user");
+        addUser({
+          data: JSON.parse(
+            window.atob(new URLSearchParams(window.location.search).get("user"))
+          ),
+        });
+        console.log(
+          "creating user",
+          JSON.parse(
+            window.atob(new URLSearchParams(window.location.search).get("user"))
+          )
+        );
       }
+    },
+    onError: (e) => {
+      setUser();
     },
   });
   console.log(user, hideHeader);
@@ -48,7 +63,11 @@ export default () => {
   if (!user)
     return (
       <div className="flex-grow-1 d-flex justify-content-center align-items-center">
-        401 unauthorised
+        <span> 401 unauthorised</span>
+        <span>
+          Please visit
+          <a href="https://vlog-planner.herokuapp.com/#/Expenses"> here</a>
+        </span>
       </div>
     );
   if (user && !user.id)
