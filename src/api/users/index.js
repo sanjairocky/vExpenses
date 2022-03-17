@@ -10,3 +10,10 @@ export const createUser = (props = {}) =>
     axios: UserClient,
     method: "post",
   });
+
+export const getUserByEmail = (props = {}) =>
+  useAxios({
+    ...props,
+    axios: UserClient,
+    method: "get",
+  });

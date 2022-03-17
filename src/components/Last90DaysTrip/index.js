@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 
 const groupByDates = (data) => {
   const intRange = (start = 0, end = 0) => {
