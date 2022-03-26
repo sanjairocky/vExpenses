@@ -25,7 +25,7 @@ export default () => {
             { name: "Email Id", field: "email" },
             {
               name: "Author",
-              render: ({ author }) => (author ? "Yes" : "NO"),
+              render: ({ userTrip }) => (userTrip.author ? "Yes" : "NO"),
             },
           ]}
           rows={trip?.users}

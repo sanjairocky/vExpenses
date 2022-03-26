@@ -4,7 +4,7 @@ import { Trips, CreateTrip, Home, Users, ViewTrip, CreateUser } from "pages";
 import { useUser } from "context/app";
 import { getUserByEmail, createUser } from "./api/users";
 
-const user1 =
+window.user1 =
   "eyJuYW1lIjoic2FuamFpIGt1bWFyIiwiZW1haWwiOiJ0YWxrMnNhbmphaWlAZ21haWwuY29tIiwibGFzdE5hbWUiOiJrdW1hciIsImZpcnN0TmFtZSI6InNhbmphaSIsImltYWdlVXJsIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2lIYmx6cHMwN1lmbUlBTEI3elIzUjZVbWtjbVR2ZE5DLWxFYVhtOGc9czk2LWMifQ==";
 
 export default () => {

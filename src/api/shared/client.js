@@ -7,6 +7,7 @@ const baseProps = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     "X-Sanazu-Client": "vExpenses",
+    "X-USER": new URLSearchParams(window.location.search).get("user"),
   },
 };
 

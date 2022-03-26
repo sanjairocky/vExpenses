@@ -4,9 +4,12 @@ import { createTrip } from "api/trips";
 import { getUsers } from "api/users";
 import createTripSchema from "schemas/createTripSchema";
 import { useNavigate } from "react-router-dom";
+import Select from "components/Select";
+import { useUser } from "context/app";
 
 export default () => {
   const navigate = useNavigate();
+  const [user] = useUser();
   const [addTrip, { isPending }] = createTrip({
     lazy: true,
     onCompleted: () => navigate("/"),
@@ -14,10 +17,14 @@ export default () => {
   const { data: users } = getUsers();
   const formik = useFormik({
     validationSchema: createTripSchema,
-    initialValues: {},
-    onSubmit: (values) => addTrip({ data: values }),
+    initialValues: {
+      users: [{ label: user?.name, value: user?.email, isFixed: true }],
+    },
+    onSubmit: ({ users, ...values }) =>
+      addTrip({ data: { ...values, users: users.map(({ value }) => value) } }),
     validateOnMount: true,
   });
+  window.formik = formik;
 
   if (isPending) return "Creating Trip...,";
   return (
@@ -49,20 +56,16 @@ export default () => {
             onBlur={formik.handleBlur}
             defaultValue={formik.values.description}
           />
-          <select
-            id="authorId"
-            className="p-2"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            defaultValue={formik.values.authorId}
-          >
-            <option>Select author</option>
-            {(users || []).map((u, key) => (
-              <option key={key} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
+          <Select
+            name="users"
+            options={(users || [])
+              .filter(({ email }) => email !== user?.email)
+              .map((u) => ({
+                label: u.name,
+                value: u.email,
+              }))}
+            formik={formik}
+          />
         </div>
         <button
           type="submit"

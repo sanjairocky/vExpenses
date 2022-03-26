@@ -6,7 +6,11 @@ import { getUsers } from "api/users";
 import { Icon, Last90DaysTrip } from "components";
 
 export default () => {
-  const { data: trips, isLoading: tripLoading, error: tripError } = getTrips();
+  const {
+    data: userTrips,
+    isLoading: tripLoading,
+    error: tripError,
+  } = getTrips();
   const { data: users, isLoading: usersLoading, error: userError } = getUsers();
   const {
     data: expenses,
@@ -31,7 +35,7 @@ export default () => {
             title: "Users",
           },
           {
-            count: trips?.length || 0,
+            count: userTrips?.trips?.length || 0,
             title: "Trips",
             error: tripError,
             loading: tripLoading,
@@ -59,7 +63,7 @@ export default () => {
         ))}
       </div>
       <div className="w-75 align-self-center">
-        <Last90DaysTrip trips={trips} />
+        <Last90DaysTrip trips={userTrips?.trips} />
       </div>
     </div>
   );

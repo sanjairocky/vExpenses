@@ -5,7 +5,7 @@ import Trip from "components/Trip";
 
 export default () => {
   const { pathname } = useLocation();
-  const { data: trips, isLoading, error } = getTrips();
+  const { data: userTrips, isLoading, error } = getTrips();
 
   if (isLoading) return "loading...";
 
@@ -22,7 +22,7 @@ export default () => {
         className="flex-grow-1 d-flex flex-column overflow-y-scroll"
         style={{ height: "70vh" }}
       >
-        {trips.map((trip, key) => (
+        {userTrips?.trips?.map((trip, key) => (
           <Trip {...trip} key={key} />
         ))}
       </div>
